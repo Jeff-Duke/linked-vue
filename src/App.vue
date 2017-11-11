@@ -2,9 +2,10 @@
   <main id="app">
     <section class="inputSection">
       <h1>Linked <span class="title-logo" /> List</h1>
-      <input type="text" v-model="bookmarkTitle" placeholder="Website Title"/>
-      <input type="text" v-model="bookmarkUrl" placeholder="Website URL"/>
+      <input type="text" @keyup="clearError" v-model="bookmarkTitle" placeholder="Website Title"/>
+      <input type="text" v-model="bookmarkUrl" placeholder="Website URL"v-on:keyup.enter="validateBookmark" />
       <button @click="validateBookmark" :disabled="isDisabled">Enter</button>
+      <button @click="clearRead" :disabled="!totalRead">Clear Read</button>
       <h3>Total links: {{totalLinks}}</h3>
       <h3>Total read: {{totalRead}}</h3>
       <h3>Total unread: {{totalUnread}}</h3>
@@ -31,9 +32,7 @@ export default {
       error: "",
       bookmarkTitle: "",
       bookmarkUrl: "",
-      bookmarkArray: [
-        { id: 231, title: "google", url: "http://www.google.com", read: false }
-      ]
+      bookmarkArray: []
     };
   },
   computed: {
@@ -62,10 +61,23 @@ export default {
         this.error = "Please enter a Website Title";
       } else if (!this.bookmarkUrl) {
         this.error = "Please enter a Website Address";
-      } else {
-        this.error = "";
+      } else if(this.validateUrl()){
         this.createBookmark();
+      } else {
+        this.error = "You did not enter a valid URL"
+        this.clearInputs();
       }
+    },
+
+    validateUrl() {
+      const testUrl = `http://${this.bookmarkUrl}`;
+      return /^(http|https|ftp):\/\/[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$/i.test(
+        testUrl
+      );
+    },
+
+    clearError() {
+      this.error = '';
     },
 
     createBookmark() {
@@ -93,6 +105,10 @@ export default {
       this.bookmarkArray = this.bookmarkArray.filter(function(i) {
         return i.id !== id;
       });
+    },
+
+    clearRead() {
+      this.bookmarkArray = this.bookmarkArray.filter(bookmark => !bookmark.read);
     }
   }
 };
@@ -139,6 +155,10 @@ h3 {
 
 button {
   border: none;
+
+  &:disabled {
+    pointer-events: none;
+  }
 }
 
 .inputSection {
