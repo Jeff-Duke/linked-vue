@@ -4,8 +4,8 @@
       <h1>Linked <span class="title-logo" /> List</h1>
       
       <input
-        @keyup="clearError"
         v-model="bookmarkTitle"
+        @keyup="clearError"
         type="text"
         placeholder="Website Title"
       />
