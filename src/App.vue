@@ -4,7 +4,10 @@
       <h1>Linked <span class="title-logo" /> List</h1>
       <input type="text" v-model="bookmarkTitle" placeholder="Website Title"/>
       <input type="text" v-model="bookmarkUrl" placeholder="Website URL"/>
-      <button @click="validateBookmark">Enter</button>
+      <button @click="validateBookmark" :disabled="isDisabled">Enter</button>
+      <h3>Total links: {{totalLinks}}</h3>
+      <h3>Total read: {{totalRead}}</h3>
+      <h3>Total unread: {{totalUnread}}</h3>
       <h2 class="error" v-if="error">{{ error }}</h2>
     </section>
     <section class="bookmarkSection">
@@ -33,6 +36,22 @@ export default {
       ]
     };
   },
+  computed: {
+    isDisabled() {
+      return !this.bookmarkTitle || !this.bookmarkUrl;
+    },
+    totalLinks() {
+      return this.bookmarkArray.length;
+    },
+    totalRead() {
+      let counter = 0;
+      this.bookmarkArray.forEach(bookmark => bookmark.read && counter++);
+      return counter;
+    },
+    totalUnread() {
+      return this.totalLinks - this.totalRead;
+    }
+  },
   methods: {
     clearInputs() {
       (this.bookmarkTitle = ""), (this.bookmarkUrl = "");
@@ -54,11 +73,10 @@ export default {
         title: this.bookmarkTitle,
         url: `http://${this.bookmarkUrl}`,
         read: false,
-        id: Date.now() * Math.random()
+        id: Date.now()
       };
       this.bookmarkArray.push(bookmark);
       this.clearInputs();
-      console.log(this.bookmarkArray);
     },
 
     markAsRead(bookmarkId) {
@@ -148,8 +166,8 @@ button {
   }
 
   .title-logo {
-    background: url('./assets/linked-list-logo.svg') center no-repeat ;
-    content: '';
+    background: url("./assets/linked-list-logo.svg") center no-repeat;
+    content: "";
     display: inline-block;
     height: 1.75rem;
     width: 3rem;
@@ -161,7 +179,7 @@ button {
   }
 
   input[type="text"] {
-    height: 2rem;
+    height: 2.25rem;
     padding: 0.25rem;
     font-size: 1.125rem;
   }
@@ -177,6 +195,11 @@ button {
 
     &:hover {
       background-color: $color-light-yellow;
+    }
+
+    &:disabled {
+      background-color: $color-light-gray;
+      color: $color-light-slate;
     }
   }
 
@@ -253,7 +276,8 @@ button {
     }
 
     &:hover {
-      button, a {
+      button,
+      a {
         border-bottom: 2px solid $color-yellow;
       }
     }
