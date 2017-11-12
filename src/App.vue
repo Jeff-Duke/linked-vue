@@ -301,9 +301,11 @@ button {
     width: 100%;
     margin: 1rem 2rem;
     padding: 1rem;
+    transition: all .125s ease;
 
     h3 {
       color: $color-dark-slate;
+      font-weight: 800;
       margin-top: 0;
     }
 
@@ -324,7 +326,7 @@ button {
     }
 
     button {
-      background-color: $color-white;
+      background-color: transparent;
       border: none;
       color: $color-dark-slate;
       cursor: pointer;
@@ -348,18 +350,19 @@ button {
       a {
         border-bottom: 2px solid $color-yellow;
       }
+      a,
+      .read-button {
+        font-weight: 800;
+      }
     }
   }
 
   .bookmarkCard.read {
     background-color: $color-light-gray;
 
-    button {
-      background-color: $color-light-gray;
-    }
-
     button.read-button {
       color: $color-red;
+      font-weight: 800;
     }
   }
 }
