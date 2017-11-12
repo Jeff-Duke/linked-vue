@@ -31,9 +31,9 @@
         Clear Read
       </button>
 
-      <h3>Total links: {{totalLinks}}</h3>
-      <h3>Total read: {{totalRead}}</h3>
-      <h3>Total unread: {{totalUnread}}</h3>
+      <h3 class="bookmark-counter">Links: {{totalLinks}}</h3>
+      <h3 class="bookmark-counter">Read: {{totalRead}}</h3>
+      <h3 class="bookmark-counter">Unread: {{totalUnread}}</h3>
 
       <h2 v-if="error" class="error">{{ error }}</h2>
     </section>
@@ -100,13 +100,11 @@ export default {
         this.error = EMPTY_TITLE;
       } else if (!this.bookmarkUrl) {
         this.error = EMPTY_URL;
+      } else if (this.validateUrl()) {
+        this.createBookmark();
       } else {
         this.error = INVALID_URL;
         this.clearInputs();
-      }
-
-      if (this.validateUrl()) {
-        this.createBookmark();
       }
     },
     validateUrl() {
@@ -225,6 +223,12 @@ button {
     color: $color-white;
   }
 
+  .bookmark-counter {
+    display: inline-block;
+    margin-right: 1.5rem;
+    margin-top: 0;
+  }
+
   h1 {
     font-size: 2rem;
     font-weight: 800;
@@ -240,7 +244,6 @@ button {
 
   .error {
     color: $color-red;
-    margin-top: 2rem;
   }
 
   input[type="text"] {
