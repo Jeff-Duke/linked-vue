@@ -216,7 +216,6 @@ button {
   min-height: 100vh;
 
   @media only screen and (max-width: 768px) {
-    height: 20rem;
     min-height: 0;
   }
 
