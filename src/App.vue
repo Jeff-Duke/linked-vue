@@ -2,35 +2,35 @@
   <main id="app">
     <section class="inputSection">
       <h1>Linked <span class="title-logo" /> List</h1>
-      
+
       <input
         v-model="bookmarkTitle"
         @keyup="clearError"
         type="text"
         placeholder="Website Title"
       />
-      
+
       <input
         v-model="bookmarkUrl"
         @keyup.enter="validateBookmark"
         type="text"
         placeholder="Website URL"
       />
-      
+
       <button
         @click="validateBookmark"
         :disabled="isDisabled"
       >
         Enter
       </button>
-      
+
       <button
         @click="clearRead"
         :disabled="!totalRead"
       >
         Clear Read
       </button>
-      
+
       <h3>Total links: {{totalLinks}}</h3>
       <h3>Total read: {{totalRead}}</h3>
       <h3>Total unread: {{totalUnread}}</h3>
@@ -47,14 +47,14 @@
         <span class="divider" />
         <a :href="bookmark.url">{{ bookmark.url }}</a>
         <span class="divider" />
-        
+
         <button
           class="read-button"
           @click="markAsRead(bookmark.id)"
         >
           Read
         </button>
-        
+
         <button @click="deleteBookmark(bookmark.id)">Delete</button>
       </div>
     </section>
@@ -62,18 +62,18 @@
 </template>
 
 <script>
-const EMPTY_TITLE = 'Please enter a Website Title';
-const EMPTY_URL = 'Please enter a Website Address';
-const INVALID_URL = 'You did not enter a valid URL';
+const EMPTY_TITLE = "Please enter a Website Title";
+const EMPTY_URL = "Please enter a Website Address";
+const INVALID_URL = "You did not enter a valid URL";
 
 export default {
-  name: 'app',
+  name: "app",
   data() {
     return {
-      error: '',
-      bookmarkTitle: '',
-      bookmarkUrl: '',
-      bookmarks: [],
+      error: "",
+      bookmarkTitle: "",
+      bookmarkUrl: "",
+      bookmarks: []
     };
   },
   computed: {
@@ -88,12 +88,12 @@ export default {
     },
     totalUnread() {
       return this.totalLinks - this.totalRead;
-    },
+    }
   },
   methods: {
     clearInputs() {
-      this.bookmarkTitle = '';
-      this.bookmarkUrl = '';
+      this.bookmarkTitle = "";
+      this.bookmarkUrl = "";
     },
     validateBookmark() {
       if (!this.bookmarkTitle) {
@@ -107,7 +107,7 @@ export default {
 
       if (this.validateUrl()) {
         this.createBookmark();
-      } 
+      }
     },
     validateUrl() {
       const testUrl = `http://${this.bookmarkUrl}`;
@@ -117,12 +117,10 @@ export default {
       );
     },
     clearError() {
-      this.error = '';
+      this.error = "";
     },
     createBookmark() {
-      const {
-        bookmarkTitle: title,
-      } = this;
+      const { bookmarkTitle: title } = this;
 
       const url = `http://${this.bookmarkUrl}`;
       const read = false;
@@ -132,16 +130,16 @@ export default {
         title,
         url,
         read,
-        id,
+        id
       };
-      
+
       this.bookmarks.push(bookmark);
       this.clearInputs();
     },
     markAsRead(bookmarkId) {
       const id = parseInt(bookmarkId);
 
-      return this.bookmarks.find((bookmark) => {
+      return this.bookmarks.find(bookmark => {
         if (bookmark.id === id) {
           bookmark.read = !bookmark.read;
         }
@@ -150,14 +148,14 @@ export default {
     deleteBookmark(bookmarkId) {
       const id = parseInt(bookmarkId);
 
-      this.bookmarks = bookmarks.filter((bookmark) => {
+      this.bookmarks = bookmarks.filter(bookmark => {
         return bookmark.id !== id;
       });
     },
     clearRead() {
       this.bookmarks = this.bookmarks.filter(bookmark => !bookmark.read);
-    },
-  },
+    }
+  }
 };
 </script>
 
