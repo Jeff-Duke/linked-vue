@@ -1,4 +1,4 @@
-#Linked-Vue
+# Linked-Vue
 
 A place to track your favorite links.  This project was built in `Vue.js` and is one of many projects from the [Turing School](https://turing.io).  Original project spec is [here.](http://frontend.turing.io/projects/linked-list.html)
 
