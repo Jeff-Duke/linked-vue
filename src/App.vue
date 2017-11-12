@@ -95,6 +95,9 @@ export default {
       this.bookmarkTitle = "";
       this.bookmarkUrl = "";
     },
+    clearError() {
+      this.error = "";
+    },
     validateBookmark() {
       if (!this.bookmarkTitle) {
         this.error = EMPTY_TITLE;
@@ -114,9 +117,6 @@ export default {
         testUrl
       );
     },
-    clearError() {
-      this.error = "";
-    },
     createBookmark() {
       const { bookmarkTitle: title } = this;
 
@@ -134,6 +134,13 @@ export default {
       this.bookmarks.push(bookmark);
       this.clearInputs();
     },
+    deleteBookmark(bookmarkId) {
+      const id = parseInt(bookmarkId);
+
+      this.bookmarks = this.bookmarks.filter(bookmark => {
+        return bookmark.id !== id;
+      });
+    },
     markAsRead(bookmarkId) {
       const id = parseInt(bookmarkId);
 
@@ -141,13 +148,6 @@ export default {
         if (bookmark.id === id) {
           bookmark.read = !bookmark.read;
         }
-      });
-    },
-    deleteBookmark(bookmarkId) {
-      const id = parseInt(bookmarkId);
-
-      this.bookmarks = bookmarks.filter(bookmark => {
-        return bookmark.id !== id;
       });
     },
     clearRead() {
