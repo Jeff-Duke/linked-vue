@@ -11,4 +11,4 @@ There are seperate branches for each phase of the spec:
 
 The **Final** branch includes the Phase-4 code but with additional refactors to make the code more readable and to help with deployment.
 
-[View the live project](linked-vue.surge.sh)
+[View the live project](https://linked-vue.surge.sh)
